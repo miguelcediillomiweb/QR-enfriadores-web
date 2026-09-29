@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#111111">
+<meta name="description" content="Página informativa de marca para clientes mediante código QR.">
+<title>Conoce nuestra marca</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;min-height:100%;font-family:Arial,Helvetica,sans-serif}
+body{background:#111;color:#fff;overflow-x:hidden}
+.video-fondo{
+ position:fixed;inset:0;width:100%;height:100%;
+ object-fit:cover;object-position:center;z-index:-3;
+ background:linear-gradient(160deg,#111,#333);
+}
+.capa{
+ position:fixed;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.28),rgba(0,0,0,.62));
+ z-index:-2;
+}
+.contenido{
+ min-height:100svh;display:flex;flex-direction:column;
+ justify-content:space-between;padding:24px 18px 28px;
+ position:relative;
+}
+.encabezado{text-align:center;padding-top:8px}
+.logo-texto{
+ display:inline-block;background:rgba(255,255,255,.94);color:#111;
+ padding:9px 20px;border-radius:999px;font-size:clamp(22px,7vw,38px);
+ font-weight:900;letter-spacing:1px;box-shadow:0 8px 24px rgba(0,0,0,.25);
+}
+.principal{text-align:center;max-width:650px;margin:auto}
+.principal h1{font-size:clamp(30px,9vw,58px);margin:0 0 10px;line-height:1.02}
+.principal p{font-size:clamp(16px,4.5vw,22px);margin:0 auto 22px;line-height:1.4}
+.botones{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.boton{
+ border:0;text-decoration:none;color:#111;background:#fff;
+ padding:13px 20px;border-radius:999px;font-weight:800;
+ box-shadow:0 7px 20px rgba(0,0,0,.28);display:inline-block;
+}
+.pie{text-align:center;font-size:12px;opacity:.85}
+@media(min-width:700px){
+ .contenido{padding:32px 42px 34px}
+}
+</style>
+</head>
+<body>
+
+<video class="video-fondo" autoplay muted loop playsinline preload="auto">
+  <source src="video-fondo.mp4" type="video/mp4">
+</video>
+<div class="capa"></div>
+
+<main class="contenido">
+  <header class="encabezado">
+    <div class="logo-texto">PEÑAFIEL</div>
+  </header>
+
+  <section class="principal">
+    <h1>Disfruta cada momento</h1>
+    <p>Conoce nuestros productos y descubre todo lo que tenemos para ti.</p>
+    <nav class="botones" aria-label="Opciones">
+      <a class="boton" href="#productos">Productos</a>
+      <a class="boton" href="#marca">Conoce la marca</a>
+    </nav>
+  </section>
+
+  <footer class="pie">Escanea el QR y conoce más</footer>
+</main>
+
+</body>
+</html>
