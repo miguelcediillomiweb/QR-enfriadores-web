@@ -4,70 +4,77 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#111111">
-<meta name="description" content="Página informativa de marca para clientes mediante código QR.">
-<title>Conoce nuestra marca</title>
+<meta name="description" content="Conoce los productos de Grupo Peñafiel.">
+<title>Grupo Peñafiel</title>
 <style>
 *{box-sizing:border-box}
 html,body{margin:0;width:100%;min-height:100%;font-family:Arial,Helvetica,sans-serif}
 body{background:#111;color:#fff;overflow-x:hidden}
-.video-fondo{
- position:fixed;inset:0;width:100%;height:100%;
- object-fit:cover;object-position:center;z-index:-3;
- background:linear-gradient(160deg,#111,#333);
-}
-.capa{
- position:fixed;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.28),rgba(0,0,0,.62));
- z-index:-2;
-}
-.contenido{
- min-height:100svh;display:flex;flex-direction:column;
- justify-content:space-between;padding:24px 18px 28px;
- position:relative;
-}
+.video-fondo{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:-3;background:#111}
+.capa{position:fixed;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.18),rgba(0,0,0,.58));z-index:-2}
+.carga{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.78);backdrop-filter:blur(5px);transition:opacity .7s ease,visibility .7s ease}
+.carga.oculta{opacity:0;visibility:hidden;pointer-events:none}
+.carga-contenido{width:min(88%,430px);text-align:center}
+.carga-titulo{font-size:clamp(21px,6vw,32px);font-weight:900;color:#000;-webkit-text-stroke:1.5px #fff;text-shadow:0 3px 12px rgba(0,0,0,.45);margin-bottom:20px}
+.barra{height:14px;width:100%;background:rgba(255,255,255,.25);border:2px solid #fff;border-radius:999px;overflow:hidden;box-shadow:0 4px 18px rgba(0,0,0,.35)}
+.progreso{height:100%;width:0%;background:#fff;border-radius:999px;transition:width .18s linear}
+.porcentaje{margin-top:9px;font-size:14px;font-weight:800;text-shadow:0 2px 8px #000}
+.contenido{min-height:100svh;padding:20px 16px 28px;position:relative}
 .encabezado{text-align:center;padding-top:8px}
-.logo-texto{
- display:inline-block;background:rgba(255,255,255,.94);color:#111;
- padding:9px 20px;border-radius:999px;font-size:clamp(22px,7vw,38px);
- font-weight:900;letter-spacing:1px;box-shadow:0 8px 24px rgba(0,0,0,.25);
-}
-.principal{text-align:center;max-width:650px;margin:auto}
-.principal h1{font-size:clamp(30px,9vw,58px);margin:0 0 10px;line-height:1.02}
-.principal p{font-size:clamp(16px,4.5vw,22px);margin:0 auto 22px;line-height:1.4}
-.botones{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
-.boton{
- border:0;text-decoration:none;color:#111;background:#fff;
- padding:13px 20px;border-radius:999px;font-weight:800;
- box-shadow:0 7px 20px rgba(0,0,0,.28);display:inline-block;
-}
-.pie{text-align:center;font-size:12px;opacity:.85}
-@media(min-width:700px){
- .contenido{padding:32px 42px 34px}
-}
+.mensaje{display:inline-block;color:#000;-webkit-text-stroke:1.2px #fff;font-size:clamp(18px,5vw,31px);font-weight:900;line-height:1.1;text-align:center;text-shadow:0 3px 10px rgba(0,0,0,.55);animation:respirar 2.8s ease-in-out infinite}
+.mensaje a{color:inherit;text-decoration:none}
+@keyframes respirar{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.marcas{max-width:1050px;margin:clamp(55px,9vh,100px) auto 0;text-align:center}
+.marcas-titulo{font-size:clamp(18px,4.5vw,27px);font-weight:900;text-shadow:0 2px 9px #000;margin-bottom:24px}
+.grid-marcas{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:clamp(14px,3vw,28px)}
+.marca{width:clamp(76px,18vw,125px);height:clamp(76px,18vw,125px);border-radius:50%;background:rgba(255,255,255,.94);border:4px solid rgba(255,255,255,.98);box-shadow:0 8px 22px rgba(0,0,0,.38);display:flex;align-items:center;justify-content:center;padding:10px;animation:flotar 3s ease-in-out infinite}
+.marca img{width:100%;height:100%;object-fit:contain;border-radius:50%;display:block}
+@keyframes flotar{0%,100%{transform:translateY(0)}50%{transform:translateY(-13px)}}
+.pie{text-align:center;font-size:12px;opacity:.9;margin-top:45px;text-shadow:0 2px 6px #000}
+@media(min-width:700px){.contenido{padding:28px 40px 34px}.marca{width:115px;height:115px}}
 </style>
 </head>
 <body>
-
-<video class="video-fondo" autoplay muted loop playsinline preload="auto">
-  <source src="video-fondo.mp4.mp4" type="video/mp4">
-</video>
+<video class="video-fondo" autoplay muted loop playsinline preload="auto" id="videoFondo"><source src="video-fondo.mp4.mp4" type="video/mp4"></video>
 <div class="capa"></div>
-
+<div class="carga" id="pantallaCarga">
+<div class="carga-contenido">
+<div class="carga-titulo">CARGANDO PRODUCTOS DE PEÑAFIEL</div>
+<div class="barra"><div class="progreso" id="progreso"></div></div>
+<div class="porcentaje" id="porcentaje">0%</div>
+</div>
+</div>
 <main class="contenido">
-  <header class="encabezado">
-    <div class="logo-texto">PEÑAFIEL</div>
-  </header>
-
-  <section class="principal">
-    <h1>Disfruta cada momento</h1>
-    <p>Conoce nuestros productos y descubre todo lo que tenemos para ti.</p>
-    <nav class="botones" aria-label="Opciones">
-      <a class="boton" href="#productos">Productos</a>
-      <a class="boton" href="#marca">Conoce la marca</a>
-    </nav>
-  </section>
-
-  <footer class="pie">Escanea el QR y conoce más</footer>
+<header class="encabezado"><div class="mensaje"><a href="#grupo-penafiel">HAZ CLIC Y CONOCE MÁS DE GRUPO PEÑAFIEL</a></div></header>
+<section class="marcas" id="grupo-penafiel">
+<div class="marcas-titulo">Conoce nuestras marcas</div>
+<div class="grid-marcas">
+<div class="marca"><img src="https://i.ibb.co/Gv3cRRdc/Logo-Aguafiel-2.png" alt="Aguafiel"></div>
+<div class="marca"><img src="https://i.ibb.co/GfjQ3c1G/1000025618-bf825456c1d5580a528d5315312af723-23-4-2025-6-50-41-p-m-20251013-195258-0000.png" alt="Marca 2"></div>
+<div class="marca"><img src="https://i.ibb.co/TqvFynr6/1000025614-764d6bbd4bd87a55458c443cea629fcf-23-4-2025-6-50-00-p-m-20251013-195326-0000.png" alt="Marca 3"></div>
+<div class="marca"><img src="https://i.ibb.co/ynkKdGX1/1000025606-1d4a51831b907a4f8b501fbec7c7af2e-23-4-2025-6-51-41-p-m-20251013-195212-0000.png" alt="Marca 4"></div>
+<div class="marca"><img src="https://i.ibb.co/Mw6dRGG/1000025646-9d370f5f68af783e23b5a9b0f5505bbb-23-4-2025-6-07-08-p-m-20251013-195450-0000.png" alt="Marca 5"></div>
+<div class="marca"><img src="https://i.ibb.co/Y7QxbJjY/1000025654-2692218fc8dc6f2b016e8d3683e5f858-23-4-2025-6-11-09-p-m-20251013-195350-0000.png" alt="Marca 6"></div>
+<div class="marca"><img src="https://i.ibb.co/sJt8BFwX/1000025642-c2cb61c3dde506ce9f3069066c669ba5-23-4-2025-6-11-01-p-m-20251013-195405-0000.png" alt="Marca 7"></div>
+<div class="marca"><img src="https://i.ibb.co/TxN97tWT/1000025626-1bff0cc8fae8cacf77890027fc33815a-23-4-2025-6-10-03-p-m-20251013-195417-0000.png" alt="Marca 8"></div>
+<div class="marca"><img src="https://i.ibb.co/CppsgtfQ/1000025630-feb45ba9b765bb9c1de588eb441f6482-23-4-2025-6-07-50-p-m-20251013-200047-0000.png" alt="Marca 9"></div>
+<div class="marca"><img src="https://i.ibb.co/vxJR42Kb/1000025666-58cc64ab75c3f8d940573a1759577a32-23-4-2025-6-00-22-p-m-20251013-195509-0000.png" alt="Marca 10"></div>
+<div class="marca"><img src="https://i.ibb.co/V0fSTkwF/1000025650-5c50d0142ea71648da15e8f0ddafd61f-23-4-2025-5-59-26-p-m-20251013-195518-0000.png" alt="Marca 11"></div>
+<div class="marca"><img src="https://i.ibb.co/jk16xsZJ/1000025638-0b248c89ee1732eb0af84073f3428ec0-23-4-2025-5-49-36-p-m-20251013-195532-0000.png" alt="Marca 12"></div>
+<div class="marca"><img src="https://i.ibb.co/V02qdfLy/1000007070-9694f92c3b44fe9ffead942f230bfb91-9-3-2025-11-01-30-p-m-20251013-195555-0000.png" alt="Marca 13"></div>
+<div class="marca"><img src="https://i.ibb.co/ZzMtgbhD/1000025658-348f843033ce99ece84ca729355c0f1b-23-4-2025-6-00-49-p-m-20251013-195500-0000.png" alt="Marca 14"></div>
+<div class="marca"><img src="https://i.ibb.co/nNxrbRyh/1000025602-62ddb21849f0361580bc4d0efa34354e-23-4-2025-6-11-20-p-m-20251013-195339-0000.png" alt="Marca 15"></div>
+<div class="marca"><img src="https://i.ibb.co/N6fbMLZD/1000006945-0068a95808c67fc45319ac198c497c31-9-3-2025-10-24-49-p-m-20251013-195609-0000.png" alt="Marca 16"></div>
+</div>
+</section>
+<footer class="pie">Escanea el QR y conoce más</footer>
 </main>
-
+<script>
+const carga=document.getElementById('pantallaCarga'),progreso=document.getElementById('progreso'),porcentaje=document.getElementById('porcentaje'),video=document.getElementById('videoFondo');
+let valor=0;
+const intervalo=setInterval(()=>{valor=Math.min(valor+Math.random()*8+3,96);progreso.style.width=valor+'%';porcentaje.textContent=Math.round(valor)+'%';},180);
+function terminarCarga(){clearInterval(intervalo);progreso.style.width='100%';porcentaje.textContent='100%';setTimeout(()=>carga.classList.add('oculta'),450)}
+if(video.readyState>=3){setTimeout(terminarCarga,900)}else{video.addEventListener('canplay',()=>setTimeout(terminarCarga,500),{once:true});setTimeout(terminarCarga,4500)}
+</script>
 </body>
 </html>
